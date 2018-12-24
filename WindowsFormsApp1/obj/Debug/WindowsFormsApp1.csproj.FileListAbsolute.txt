@@ -18,3 +18,14 @@ C:\Users\user\Desktop\github çalışma\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\W
 C:\Users\user\Desktop\github çalışma\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\user\Desktop\github çalışma\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\user\Desktop\github çalışma\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\Furkan\Desktop\GitHub repo\Yaz_Lab_1_3\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\Furkan\Desktop\GitHub repo\Yaz_Lab_1_3\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\Furkan\Desktop\GitHub repo\Yaz_Lab_1_3\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\Furkan\Desktop\GitHub repo\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojAssemblyReference.cache
+C:\Users\Furkan\Desktop\GitHub repo\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\Furkan\Desktop\GitHub repo\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Furkan\Desktop\GitHub repo\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\Furkan\Desktop\GitHub repo\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\Furkan\Desktop\GitHub repo\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\Furkan\Desktop\GitHub repo\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\Furkan\Desktop\GitHub repo\Yaz_Lab_1_3\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Show.resources
