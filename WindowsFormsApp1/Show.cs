@@ -16,11 +16,17 @@ namespace WindowsFormsApp1
         int width;
         public Show(int height , int width)
         {
+            InitializeComponent();
             this.height = height;
             this.width = width;
-            InitializeComponent();
             pictureBox1.Height = height;
             pictureBox1.Width = width;
+            
+        }
+
+        private void Show_Load(object sender, EventArgs e)
+        {
+            this.Size = new Size((pictureBox1.Width + 100), (pictureBox1.Height + 100));
         }
     }
 }

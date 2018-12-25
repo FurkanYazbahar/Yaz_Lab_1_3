@@ -15,8 +15,11 @@ namespace WindowsFormsApp1
     public partial class Form1 : Form
     {
         int height, width;
-        FileStream fs;
-        Byte[] fileArray , yArray;
+        Byte[] fileArray;
+        //Byte[] yArray;
+        string desktopPath;
+        double yuvSize;
+        int frameC;
 
         public Form1()
         {
@@ -27,65 +30,59 @@ namespace WindowsFormsApp1
         private void button1_Click(object sender, EventArgs e)
         {
             //kullanıcı aç butonuna bastığı zaman 
-             dosyaAc();
-        }
-        
-        private void button2_Click(object sender, EventArgs e)//kaydt butonuna basıldığı zaman
-        {
-            Object[] parseFile;
+            string fileName = "";
 
             if (radioButton1.Checked == true)
             {
-                try
-                {
-                    width = int.Parse(textBox1.Text);
-                    height = int.Parse(textBox2.Text);
-                    parseFile = arrayParse(fileArray, 3);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("En ve Boy bilgilerinin girilmesi gerek !!");
-                }
+                fileName = "4 4 4";
+                dosyaAc(fileName);
+                this.yuvSize = 3;
             }
-            if (radioButton2.Checked == true)
+            else if (radioButton2.Checked == true)
             {
-                try
-                {
-                    width = int.Parse(textBox1.Text);
-                    height = int.Parse(textBox2.Text);
-                    parseFile = arrayParse(fileArray, 2);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("En ve Boy bilgilerinin girilmesi gerek !!");
-                }
+                fileName = "4 2 2";
+                dosyaAc(fileName);
+                this.yuvSize = 2;
             }
-            if (radioButton3.Checked == true)
+            else if (radioButton3.Checked == true)
             {
-                try
-                {
-                    width = int.Parse(textBox1.Text);
-                    height = int.Parse(textBox2.Text);
-                    parseFile = arrayParse(fileArray, 1.5);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("En ve Boy bilgilerinin girilmesi gerek !!");
-                }
-                
+                fileName = "4 2 0";
+                dosyaAc(fileName);
+                this.yuvSize = 1.5;
             }
-            //if (bmpSave())
-            //{
-            //    MessageBox.Show("Kayıt işlemi başarılı !");
-            //}
-            //else
-            //    MessageBox.Show("Kayıt işlemi başarısız !");
+            else
+            {
+                MessageBox.Show("Format Türü Seçilmelidir !!");
+                linkLabel1.Focus();
+            }
+           
         }
 
-        private Boolean bmpSave(Bitmap[] bmp)
+        //kaydet butonuna basıldığı zaman
+        private void button2_Click(object sender, EventArgs e)
         {
-            return false;
+            if (System.IO.Directory.Exists(desktopPath))
+            {
+                Directory.Delete(desktopPath);
+            }
+            Directory.CreateDirectory(desktopPath);
+
+            arrayParse(this.fileArray, yuvSize);
         }
+
+        //TODO: unutma doldur....
+        //private void bmpSave(Bitmap[] bmp)
+        //{
+        //    if (System.IO.Directory.Exists(desktopPath))
+        //    {
+        //        Directory.Delete(desktopPath);     
+        //    }
+        //    Directory.CreateDirectory(desktopPath);
+        //    for (int i = 0; i < frameC; i++)
+        //    {
+        //        bmp[i].Save(desktopPath + $"{frameC}.bmp");
+        //    }
+        //}
         private void button3_Click(object sender, EventArgs e)
         {
             Show sh = new Show(height,width);
@@ -93,35 +90,46 @@ namespace WindowsFormsApp1
         }
 
         // YUV formatındaki dosyaları seçer ve fileArray dizisine atar
-        public void dosyaAc ()
+        public void dosyaAc (string fileName)
         {
             FileStream fileS;
             OpenFileDialog file = new OpenFileDialog();
             file.Filter = "YUV files (*.yuv)|*.yuv";
             file.InitialDirectory = "C:\\Users\\Furkan\\Desktop\\GitHub repo\\yuv Formatları";
+            
             int i = 0;
             int sayac = 0;
+
             try
             {
-                if (file.ShowDialog() == DialogResult.OK)
+                try
                 {
-                    fileS = File.Open(file.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-                    fileArray = new Byte[fileS.Length];
-                    while (i > -1)
+                    if (file.ShowDialog() == DialogResult.OK)
                     {
-                        i = fileS.ReadByte();
-                        if (i != -1)
-                        {
-                            fileArray[sayac] = (Byte)i;
+                        this.width = int.Parse(textBox1.Text);
+                        this.height = int.Parse(textBox2.Text);
 
-                            //MessageBox.Show($"{sayac}. indis :{ToHex(arr[sayac])}");
+                        fileS = File.Open(file.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                        fileArray = new Byte[fileS.Length];
+                        while (i > -1)
+                        {
+                            i = fileS.ReadByte();
+                            if (i != -1)
+                            {
+                                fileArray[sayac] = (Byte)i;
+                            }
+                            sayac++;
                         }
-                        sayac++;
                     }
+                    if (fileArray != null)
+                    {
+                        MessageBox.Show("Dosya açma işlemi başarılı !!");
+                    }
+                    desktopPath = System.Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\" + fileName;
                 }
-                if(fileArray != null)
+                catch (Exception)
                 {
-                MessageBox.Show("Dosya açma işlemi başarılı !!");
+                    MessageBox.Show("En ve Boy Değerleri Sayısal Olarak Girilmelidir !!");
                 }
                 
             }
@@ -133,39 +141,42 @@ namespace WindowsFormsApp1
         }
 
         // Elimizdeki Byte dizisini istenilen yuv formatında bölümleme ve ayrıştırma yapıp nesne dizimize atıyoruz.
-        public Object[] arrayParse(Byte[] array , double yuvSize)
+        public void arrayParse(Byte[] arrFile , double yuvFormat)
         {
-            //TODO: yuv formatına göre bölümlencek 
-            ulong frameSize;
-            int ySize = height * width;
-            double frameS = height * width * yuvSize;
-            frameSize = Convert.ToUInt64(frameS);
-            MessageBox.Show($" frameCount :{array.Length/frameS}");
-            Object[] obj = null;
-            MessageBox.Show($"ySize : {ySize} frameSize :{frameSize}");
-
-            //Bitmap bmp;
-            //for (int frameCount = 0; frameCount < (arr.Length / frameSize); frameCount++)
-            //{
-            //    int tmp = 0;
-            //    for (int j = frameCount * frameSize; j < arr.Length; j++)
-            //    {
-            //        if (tmp < ySize)
-            //        {
-            //            arry[tmp] = arr[j];
-            //            tmp++;
-            //        }
-            //        else
-            //        {
-            //            break;
-            //        }
-            //    }
-            //    bmp = Convert2Bitmap(arry, 720, 576);
-            //    bmp.Save($"C:\\Users\\Furkan\\Desktop\\GitHub repo\\yuv Formatları\\4 4 4\\{frameCount}.bmp");
-            //}
-
-            return obj;
+            int frames = Convert.ToInt32(width * height * yuvFormat);
+            int ySize = width * height;
+            this.frameC = arrFile.Length / frames;
+            Byte[] arrY = new Byte[ySize];
+            Bitmap bmp = null;
+            for (int frameCount = 0; frameCount < (arrFile.Length / frames); frameCount++)
+            {
+                int tmp = 0;
+                for (int j = frameCount * frames; j < arrFile.Length; j++)
+                {
+                    if (tmp < ySize)
+                    {
+                        arrY[tmp] = arrFile[j];
+                        tmp++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                bmp = Convert2Bitmap(arrY, width, height);
+                // bmp.Save($"C:\\Users\\Furkan\\Desktop\\GitHub repo\\yuv Formatları\\4 2 0\\{frameCount}.bmp");
+                bmp.Save($"{desktopPath}\\{frameCount}.bmp");
+            }
+            
         }
+
+        // 
+        
+            //Bitmap bmp;
+            // bmp = Convert2Bitmap(arry, 176, 144);
+            //bmp.Save($"C:\\Users\\Furkan\\Desktop\\GitHub repo\\akiyo_qcif\\{frameCount}.bmp");
+            //pictureBox1.Image = bmp;
+        
 
         // Byte dizisini bitmap e dönüştürme
         public Bitmap Convert2Bitmap(byte[] DATA, int width, int height)
