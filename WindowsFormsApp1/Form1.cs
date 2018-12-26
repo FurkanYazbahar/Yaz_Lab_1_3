@@ -63,29 +63,17 @@ namespace WindowsFormsApp1
         {
             if (System.IO.Directory.Exists(desktopPath))
             {
-                Directory.Delete(desktopPath);
+                Directory.Delete(desktopPath,true);
             }
             Directory.CreateDirectory(desktopPath);
 
             arrayParse(this.fileArray, yuvSize);
         }
 
-        //TODO: unutma doldur....
-        //private void bmpSave(Bitmap[] bmp)
-        //{
-        //    if (System.IO.Directory.Exists(desktopPath))
-        //    {
-        //        Directory.Delete(desktopPath);     
-        //    }
-        //    Directory.CreateDirectory(desktopPath);
-        //    for (int i = 0; i < frameC; i++)
-        //    {
-        //        bmp[i].Save(desktopPath + $"{frameC}.bmp");
-        //    }
-        //}
+        // Kayıtlı resimlere yönlendiğimiz kısım
         private void button3_Click(object sender, EventArgs e)
         {
-            Show sh = new Show(height,width);
+            Show sh = new Show(desktopPath,height,width,frameC);
             sh.Show();
         }
 
@@ -169,14 +157,6 @@ namespace WindowsFormsApp1
             }
             
         }
-
-        // 
-        
-            //Bitmap bmp;
-            // bmp = Convert2Bitmap(arry, 176, 144);
-            //bmp.Save($"C:\\Users\\Furkan\\Desktop\\GitHub repo\\akiyo_qcif\\{frameCount}.bmp");
-            //pictureBox1.Image = bmp;
-        
 
         // Byte dizisini bitmap e dönüştürme
         public Bitmap Convert2Bitmap(byte[] DATA, int width, int height)
