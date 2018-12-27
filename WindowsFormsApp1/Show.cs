@@ -33,23 +33,18 @@ namespace WindowsFormsApp1
 
         private void Show_Load(object sender, EventArgs e)
         {
-            this.Size = new Size((width + 10), (height + 50));
-            //this.Size = new Size((pictureBox1.Width + 100), (pictureBox1.Height + 100));
-            imges = Directory.GetFiles(desktopPath + "\\");
-            System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-            timer.Interval = 300;
-            timer.Tick += new EventHandler(PlayTime);
-            timer.Start();
+                this.Size = new Size((width + 10), (height + 50));
+                imges = Directory.GetFiles(desktopPath + "\\");
+                System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+                timer.Interval = 60;
+                timer.Tick += new EventHandler(PlayTime);
+                timer.Start();
         }
 
         void PlayTime(object sender, EventArgs e)
         {
-            
-            //pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-            // pictureBox1.Image = Image.FromFile(imges[counter++]);
-            //pictureBox1.ImageLocation = imges[counter++]; // better to use it this way.
-            pictureBox1.Image = Image.FromFile(desktopPath + $"\\{counter++}.bmp");
-            if (counter >= frameC) counter = 0; // Handling out of Bounds
+             pictureBox1.Image = Image.FromFile(desktopPath + $"\\{counter++}.bmp");
+             if (counter >= frameC) counter = 0; // Handling out of Bounds
         }
     }
 }

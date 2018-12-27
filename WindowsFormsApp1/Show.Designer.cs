@@ -49,7 +49,6 @@
             this.ClientSize = new System.Drawing.Size(527, 381);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Show";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Show";
             this.Load += new System.EventHandler(this.Show_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

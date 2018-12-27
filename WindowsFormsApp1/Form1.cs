@@ -16,7 +16,6 @@ namespace WindowsFormsApp1
     {
         int height, width;
         Byte[] fileArray;
-        //Byte[] yArray;
         string desktopPath;
         double yuvSize;
         int frameC;
@@ -26,10 +25,9 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-
+        // Aç butonuna tıklandığı zaman seçili özellik atamaları yapılıp dosyaAc fonksiyonu çalıştırılır...
         private void button1_Click(object sender, EventArgs e)
         {
-            //kullanıcı aç butonuna bastığı zaman 
             string fileName = "";
 
             if (radioButton1.Checked == true)
@@ -55,26 +53,39 @@ namespace WindowsFormsApp1
                 MessageBox.Show("Format Türü Seçilmelidir !!");
                 linkLabel1.Focus();
             }
-           
         }
 
-        //kaydet butonuna basıldığı zaman
+        //kaydet butonuna basıldığı zaman Masaüstüne gerekli klasör oluşturulup arrayParse fonksiyonu çalıştırılır...
         private void button2_Click(object sender, EventArgs e)
         {
-            if (System.IO.Directory.Exists(desktopPath))
+            if (desktopPath != null)
             {
-                Directory.Delete(desktopPath,true);
-            }
-            Directory.CreateDirectory(desktopPath);
+                if (System.IO.Directory.Exists(desktopPath))
+                {
+                    Directory.Delete(desktopPath,true);
+                }
+                Directory.CreateDirectory(desktopPath);
 
-            arrayParse(this.fileArray, yuvSize);
+                arrayParse(this.fileArray, yuvSize);
+            }
+            else
+            {
+                MessageBox.Show("İşlenecek dosya seçilmeden kayıt işlemi yapılamaz !!");
+            }
         }
 
-        // Kayıtlı resimlere yönlendiğimiz kısım
+        // Kayıtlı resimlerin sırasıyla oynatılacak forma yönlendiğimiz kısım
         private void button3_Click(object sender, EventArgs e)
         {
-            Show sh = new Show(desktopPath,height,width,frameC);
-            sh.Show();
+            if (desktopPath != null)
+            {
+                Show sh = new Show(desktopPath,height,width,frameC);
+                sh.Show();
+            }
+            else
+            {
+                MessageBox.Show("Dosya ve Özellikleri girilmeden oynatma gerçekleştirilemez !!");
+            }
         }
 
         // YUV formatındaki dosyaları seçer ve fileArray dizisine atar
@@ -119,13 +130,11 @@ namespace WindowsFormsApp1
                 {
                     MessageBox.Show("En ve Boy Değerleri Sayısal Olarak Girilmelidir !!");
                 }
-                
             }
             catch (Exception)
             {
                 MessageBox.Show("Dosya açma işlemi başarısız !!");
             }
-    
         }
 
         // Elimizdeki Byte dizisini istenilen yuv formatında bölümleme ve ayrıştırma yapıp nesne dizimize atıyoruz.
@@ -152,10 +161,8 @@ namespace WindowsFormsApp1
                     }
                 }
                 bmp = Convert2Bitmap(arrY, width, height);
-                // bmp.Save($"C:\\Users\\Furkan\\Desktop\\GitHub repo\\yuv Formatları\\4 2 0\\{frameCount}.bmp");
                 bmp.Save($"{desktopPath}\\{frameCount}.bmp");
             }
-            
         }
 
         // Byte dizisini bitmap e dönüştürme
